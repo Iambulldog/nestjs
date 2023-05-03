@@ -3,14 +3,16 @@ import { IsEmail, IsNotEmpty, Matches } from 'class-validator';
 
 export class CreateUserDto {
 
-  @Matches('[a-z0-9\-]+') 
-  test:string;
+  // @Matches('[a-z0-9\-]+') 
+  // test:string;
   
-  @IsEmail({}, { message: 'Invaสาดเ้สวดเ้วา.' })
+  // @IsEmail({}, { message: 'Invaสาดเ้สวดเ้วา.' })
   @IsNotEmpty()
-  email: string;
+  f_name: string;
 
   @IsNotEmpty()
-  password: string;
+  l_name: string;
+  
+  is_active: boolean;
 
 }

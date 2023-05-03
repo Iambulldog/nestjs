@@ -1,19 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { IUser } from './user.interface';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return createUserDto;
+  constructor(
+    @InjectRepository(User)
+    private UserRepo: Repository<User>,
+  ) {}
+
+  create(data: IUser) {
+    // const d: IUser[] = [data, data]; ตย. บันทึกหลายตัว
+    return this.UserRepo.save(data);
   }
 
-  findAll() {
-    return `This action returns all user`;
+  findAll(): Promise<User[]> {
+    return this.UserRepo.find({ relations: ['tickets'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id: number): Promise<User> {
+    return this.UserRepo.findOne({ where: { id }, relations: ['tickets'] });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

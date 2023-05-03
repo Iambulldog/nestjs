@@ -10,6 +10,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { IUser } from './user.interface';
 
 @Controller('user')
 export class UserController {
@@ -17,7 +18,13 @@ export class UserController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+    const data: IUser = {
+      firstName: createUserDto.f_name,
+      lastName: createUserDto.l_name,
+      isActive: createUserDto.is_active,
+    };
+    createUserDto;
+    return this.userService.create(data);
   }
 
   @Get()

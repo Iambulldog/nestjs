@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+  postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=mommam
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=lotto
+    ports:
+      - '5432:5432'
