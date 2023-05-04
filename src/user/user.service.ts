@@ -19,7 +19,7 @@ export class UserService {
   }
 
   findAll(): Promise<User[]> {
-    return this.UserRepo.find({ relations: ['tickets'] });
+    return this.UserRepo.find({ relations: ['tickets', 'tickets.categories'] });
   }
 
   findOne(id: number): Promise<User> {
