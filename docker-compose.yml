@@ -14,3 +14,28 @@ services:
       - POSTGRES_DB=lotto
     ports:
       - '5432:5432'
+  mommam-pma:
+    image: phpmyadmin:latest
+    container_name: mommam-pma
+    ports:
+      - 8888:80
+    depends_on:
+      - mommam-mysql
+    environment:
+      PMA_HOST: mommam-mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 30000M
+    restart: 'no'
+  mommam-mysql:
+    image: mysql:8.0
+    container_name: mommam-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'lotto'
+      MYSQL_USER: 'superuser'
+      MYSQL_PASSWORD: 'root'
+      TZ: 'Asia/Bangkok'
+    ports:
+    - '3306:3306'
